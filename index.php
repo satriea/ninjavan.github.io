@@ -37,7 +37,7 @@
             <div class="col-12">
                 <div class="card mb-3">
                     <div class="card-header">
-                    Dashboard - Total Scan per Rider
+                    Dashboard - Total Scan per Rider nya
                     <span id="totalScanCount" class="float-end"></span> <!-- Menampilkan total count di sini -->
                     </div>
                     <div class="card-body">
