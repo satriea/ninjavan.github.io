@@ -54,7 +54,7 @@
             <!-- Form untuk Rider dan Barcode (kolom kiri) -->
             <div class="col-md-6">
                 <div class="card">
-                    <div class="card-header">Form Scanned Barcodes Ninjavan</div>
+                    <div class="card-header">Form Scanned Barcodes Ninjavangit</div>
                         <form id="barcodeForm" class="form-control">
                             <!-- Input untuk Nama Rider -->
                             <div class="mb-1">
