@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Spreadsheet Data</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Data from Google Spreadsheet</h1>
+    <table id="sheetData">
+        <thead>
+            <tr>
+                <!-- Judul kolom akan ditambahkan di sini -->
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data akan ditampilkan di sini -->
+        </tbody>
+    </table>
+
+    <script>
+        // Ganti {SPREADSHEET_ID} dengan ID Spreadsheet Anda
+        //const spreadsheetId = "2PACX-1vSAhMp2mdZMCcwttHN-G8KW5GOT-4lfRqm6mUph_0i6AcFFzuXjpp7n_IVpZ5U7S6SxlPplIWM-CChQ";
+        const sheetURL = `https://docs.google.com/spreadsheets/d/e/16nM8nbdLXT5DG4TkxM3eB8p975c5Gf7zFdtaQETzNIg/values?alt=json`;
+        console.log(sheetURL);
+
+        // Fungsi untuk menampilkan data di tabel
+        function displaySheetData(data) {
+            const tableHead = document.querySelector("#sheetData thead tr");
+            const tableBody = document.querySelector("#sheetData tbody");
+
+            // Kosongkan tabel sebelum menambahkan data
+            tableHead.innerHTML = "";
+            tableBody.innerHTML = "";
+
+            // Ambil entri data
+            const entries = data.feed.entry;
+
+            // Ambil nama kolom dari entri pertama
+            const columns = Object.keys(entries[0]).filter(key => key.startsWith("gsx$"));
+
+            // Buat header tabel
+            columns.forEach(col => {
+                const th = document.createElement("th");
+                th.textContent = col.replace("gsx$", "").toUpperCase(); // Menghilangkan gsx$ dan mengubah jadi uppercase
+                tableHead.appendChild(th);
+            });
+
+            // Tambahkan data ke body tabel
+            entries.forEach(entry => {
+                const tr = document.createElement("tr");
+                columns.forEach(col => {
+                    const td = document.createElement("td");
+                    td.textContent = entry[col].$t; // Mengakses data
+                    tr.appendChild(td);
+                });
+                tableBody.appendChild(tr);
+            });
+        }
+
+        // Fetch data dari Google Spreadsheet
+        fetch(sheetURL)
+            .then(response => response.json())
+            .then(data => displaySheetData(data))
+            .catch(error => console.error("Error fetching data: ", error));
+
+    </script>
+
+</body>
+</html>
+
